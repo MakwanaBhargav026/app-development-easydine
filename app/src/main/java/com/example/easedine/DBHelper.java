@@ -24,15 +24,15 @@ public class DBHelper extends SQLiteOpenHelper {
         onCreate(Db);
     }
 
-    public boolean insertuserdata(String uname, String pass, String cpass) {
-        SQLiteDatabase Db = this.getWritableDatabase();
-        ContentValues contentValues = new ContentValues();
-        contentValues.put("uname", uname);
-        contentValues.put("pass", pass);
-        contentValues.put("cpass", cpass);
-        long result = Db.insert("Userdetails", null, contentValues);
-        return result != -1; // return true if insertion is successful, false otherwise
-    }
+//    public boolean insertuserdata(String uname, String pass, String cpass) {
+//        SQLiteDatabase Db = this.getWritableDatabase();
+//        ContentValues contentValues = new ContentValues();
+//        contentValues.put("uname", uname);
+//        contentValues.put("pass", pass);
+//        contentValues.put("cpass", cpass);
+//        long result = Db.insert("Userdetails", null, contentValues);
+//        return result != -1; // return true if insertion is successful, false otherwise
+//    }
 
     public boolean checkdetails(String uname, String pass) {
         SQLiteDatabase Db = this.getReadableDatabase();
@@ -40,6 +40,32 @@ public class DBHelper extends SQLiteOpenHelper {
         boolean exists = cursor.getCount() > 0;
         cursor.close();
         return exists;
+    }
+    public Boolean checkUsername(String username) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM users WHERE username = ?", new String[]{username});
+        boolean exists = cursor.getCount() > 0;
+        cursor.close();
+        return exists;
+    }
+
+    // Method to update user's password
+    public Boolean updateUserPassword(String username, String newPassword) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("password", newPassword);
+        int result = db.update("users", contentValues, "username = ?", new String[]{username});
+        return result != -1;
+    }
+
+    // Modify insertuserdata method if necessary
+    public Boolean insertuserdata(String uname, String pass, String copass) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("username", uname);
+        contentValues.put("password", pass);
+        long result = db.insert("users", null, contentValues);
+        return result != -1;
     }
 }
 

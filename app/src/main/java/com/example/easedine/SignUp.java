@@ -42,19 +42,33 @@ public class SignUp extends AppCompatActivity {
             public void onClick(View view) {
                 String Username = username.getText().toString();
                 String password = fpassword.getText().toString();
-                String copass = cpassword.getText().toString();
+                String copassword = cpassword.getText().toString();
 
                 // Check if password and confirm password match
-                if (password.equals(copass)) {
-                    // Insert data into the database
-                    Boolean checkdata = db.insertuserdata(Username, password, copass);
-                    if (checkdata) {
-                        Toast.makeText(SignUp.this, "New Entry inserted", Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(SignUp.this, MainActivity.class);
-                        startActivity(intent);
+                if (password.equals(copassword)) {
+                    // Check if username already exists in the database
+                    Boolean userExists = db.checkUsername(Username);
+                    if (userExists) {
+                        // Update the existing user's password
+                        Boolean updatePassword = db.updateUserPassword(Username, password);
+                        if (updatePassword) {
+                            Toast.makeText(SignUp.this, "Password updated successfully", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(SignUp.this, "Password update failed", Toast.LENGTH_SHORT).show();
+                        }
                     } else {
-                        Toast.makeText(SignUp.this, "New Entry not inserted", Toast.LENGTH_SHORT).show();
+                        // Insert new user data into the database
+                        Boolean insertData = db.insertuserdata(Username, password, copassword);
+                        if (insertData) {
+                            Toast.makeText(SignUp.this, "New Entry inserted", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(SignUp.this, "New Entry not inserted", Toast.LENGTH_SHORT).show();
+                        }
                     }
+
+                    // Navigate to MainActivity
+                    Intent intent = new Intent(SignUp.this, MainActivity.class);
+                    startActivity(intent);
                 } else {
                     // Show toast message if passwords do not match
                     Toast.makeText(SignUp.this, "Passwords do not match", Toast.LENGTH_SHORT).show();
