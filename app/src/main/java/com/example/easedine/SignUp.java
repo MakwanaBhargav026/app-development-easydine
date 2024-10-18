@@ -46,6 +46,8 @@ public class SignUp extends AppCompatActivity {
 
                 // Check if password and confirm password match
                 if (password.equals(copassword)) {
+                    // Clear the entire database before proceeding with user operations;
+
                     // Check if username already exists in the database
                     Boolean userExists = db.checkUsername(Username);
                     if (userExists) {
@@ -67,7 +69,7 @@ public class SignUp extends AppCompatActivity {
                     }
 
                     // Navigate to MainActivity
-                    Intent intent = new Intent(SignUp.this, MainActivity.class);
+                    Intent intent = new Intent(SignUp.this, Page2.class);
                     startActivity(intent);
                 } else {
                     // Show toast message if passwords do not match

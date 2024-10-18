@@ -107,14 +107,37 @@
         android:id="@+id/imageView4"
         android:layout_width="69dp"
         android:layout_height="83dp"
-        android:layout_marginStart="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/editTextText4"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.47"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.344"
+        app:layout_constraintVertical_bias="0.246"
         app:srcCompat="@drawable/usericon" />
+
+    <!--    <com.google.android.material.textfield.TextInputLayout-->
+<!--        android:id="@+id/textInputLayout"-->
+<!--        android:layout_width="203dp"-->
+<!--        android:layout_height="116dp"-->
+<!--        android:layout_marginBottom="324dp"-->
+<!--        android:backgroundTint="#00FFFFFF"-->
+<!--        android:hint="Password"-->
+<!--        app:boxStrokeColor="#00000000"-->
+<!--        app:counterTextColor="#000000"-->
+<!--        app:hintTextColor="#000000"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:passwordToggleEnabled="true">-->
+
+<!--        <com.google.android.material.textfield.TextInputEditText-->
+<!--            android:id="@+id/textInputedittext"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="33dp"-->
+<!--            android:hint="hint"-->
+<!--            android:inputType="textPassword"-->
+<!--            android:textColor="#000000" />-->
+<!--    </com.google.android.material.textfield.TextInputLayout>-->
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

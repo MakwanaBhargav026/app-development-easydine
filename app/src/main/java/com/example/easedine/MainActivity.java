@@ -15,7 +15,9 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 public class MainActivity extends AppCompatActivity {
-    EditText username, password;
+    EditText username,password;
+//    TextInputLayout password1;
+//    TextInputEditText password;
     Button b1,b2,b3;
     DBHelper db;
     ImageView img1,img2;
