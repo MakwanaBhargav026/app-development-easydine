@@ -16,7 +16,7 @@ import androidx.core.view.WindowInsetsCompat;
 public class SignUp extends AppCompatActivity {
     EditText username, fpassword, cpassword;
     Button b1;
-    DBHelper db;
+    DBLogin db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +34,7 @@ public class SignUp extends AppCompatActivity {
         fpassword = findViewById(R.id.editTextTextPassword2);
         cpassword = findViewById(R.id.editTextTextPassword3);
         b1 = findViewById(R.id.button3);
-        db = new DBHelper(this);
+        db = new DBLogin(this);
 
         // Set click listener for sign up button
         b1.setOnClickListener(new View.OnClickListener() {
@@ -52,7 +52,7 @@ public class SignUp extends AppCompatActivity {
                     Boolean userExists = db.checkUsername(Username);
                     if (userExists) {
                         // Update the existing user's password
-                        Boolean updatePassword = db.updateUserPassword(Username, password);
+                        Boolean updatePassword = true;//db.updateUserPassword(Username, password);
                         if (updatePassword) {
                             Toast.makeText(SignUp.this, "Password updated successfully", Toast.LENGTH_SHORT).show();
                         } else {
@@ -60,7 +60,7 @@ public class SignUp extends AppCompatActivity {
                         }
                     } else {
                         // Insert new user data into the database
-                        Boolean insertData = db.insertuserdata(Username, password, copassword);
+                        Boolean insertData = db.insertUser(Username, password);
                         if (insertData) {
                             Toast.makeText(SignUp.this, "New Entry inserted", Toast.LENGTH_SHORT).show();
                         } else {

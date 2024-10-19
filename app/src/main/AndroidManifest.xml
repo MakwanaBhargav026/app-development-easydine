@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.EaseDine"
         tools:targetApi="31">
+<!--        <activity-->
+<!--            android:name=".ManagerOrderActivity"-->
+<!--            android:exported="false" />-->
         <activity
             android:name=".OrderSummaryActivity"
             android:exported="false" />
@@ -30,6 +33,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name="ManagerOrderActivity"/>
     </application>
 
 </manifest>

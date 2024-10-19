@@ -8,16 +8,15 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+public class DBLogin extends SQLiteOpenHelper {
 
-public class DBHelper extends SQLiteOpenHelper {
-
-    private static final String DATABASE_NAME = "UserDB";
+    private static final String DATABASE_NAME = "LoginDB";
     private static final int DATABASE_VERSION = 1;
     private static final String TABLE_USERS = "Users";
     private static final String COLUMN_USERNAME = "Username";
-    private static final String TOTAL_PRICE = "total_price";
+    private static final String COLUMN_PASSWORD = "Password";
 
-    public DBHelper(Context context) {
+    public DBLogin(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
@@ -25,7 +24,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         String CREATE_USERS_TABLE = "CREATE TABLE " + TABLE_USERS + "("
                 + COLUMN_USERNAME + " TEXT,"
-                + TOTAL_PRICE + " TEXT" + ")";
+                + COLUMN_PASSWORD + " TEXT" + ")";
         db.execSQL(CREATE_USERS_TABLE);
     }
 
@@ -35,12 +34,11 @@ public class DBHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public boolean insertUser(String username, String total_price) {
+    public Boolean insertUser(String username, String password) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(COLUMN_USERNAME, username);
-        values.put(TOTAL_PRICE, total_price);
-
+        values.put(COLUMN_PASSWORD, password);
         // Insert the row and get the result
         long result = db.insert(TABLE_USERS, null, values);
 
@@ -49,7 +47,6 @@ public class DBHelper extends SQLiteOpenHelper {
         // Check if the insertion was successful (result != -1)
         return result != -1;
     }
-
 
     public ArrayList<HashMap<String, String>> getUsers() {
         ArrayList<HashMap<String, String>> userList = new ArrayList<>();
@@ -60,7 +57,7 @@ public class DBHelper extends SQLiteOpenHelper {
             do {
                 HashMap<String, String> user = new HashMap<>();
                 user.put("Username", cursor.getString(0));
-                user.put("total_price", cursor.getString(1));
+                user.put("Password", cursor.getString(1));
                 userList.add(user);
             } while (cursor.moveToNext());
         }
@@ -68,4 +65,30 @@ public class DBHelper extends SQLiteOpenHelper {
         db.close();
         return userList;
     }
+
+    public boolean checkUsername(String username) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "SELECT * FROM " + TABLE_USERS + " WHERE " + COLUMN_USERNAME + " = ?";
+        Cursor cursor = db.rawQuery(query, new String[]{username});
+
+        boolean exists = cursor.getCount() > 0;  // If the count is more than 0, the username exists
+
+        cursor.close();
+        db.close();
+        return exists;  // Return true if username exists, false otherwise
+    }
+
+    public boolean checkUsernameAndPassword(String username, String password) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "SELECT * FROM " + TABLE_USERS + " WHERE " + COLUMN_USERNAME + " = ? AND " + COLUMN_PASSWORD + " = ?";
+        Cursor cursor = db.rawQuery(query, new String[]{username, password});
+
+        boolean exists = cursor.getCount() > 0;  // If the count is more than 0, the username and password match
+
+        cursor.close();
+        db.close();
+        return exists;  // Return true if the username and password are correct
+    }
+
+
 }
